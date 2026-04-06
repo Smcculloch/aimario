@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Projects\Home\ai-mario\AIMario.CPlusPlus\build\_deps\raylib-subbuild\CMakeFiles\8c6189572428b4e236c265a67c2dd21e\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{6A579901-994D-3481-BD71-0CF996A5B1E3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

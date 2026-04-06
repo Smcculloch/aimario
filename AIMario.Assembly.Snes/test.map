@@ -1,0 +1,37 @@
+Modules list:
+-------------
+test_display.o:
+    CODE              Offs=000000  Size=0000AF  Align=00001  Fill=0000
+header.o:
+    HEADER            Offs=000000  Size=000020  Align=00001  Fill=0000
+    VECTORS           Offs=000000  Size=000020  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+CODE                  008000  0080AE  0000AF  00001
+HEADER                00FF00  00FF1F  000020  00001
+VECTORS               00FFE0  00FFFF  000020  00001
+
+
+Exports list by name:
+---------------------
+NMI_Handler               008000 RLA    Reset_Handler             008006 RLA    
+
+
+
+Exports list by value:
+----------------------
+NMI_Handler               008000 RLA    Reset_Handler             008006 RLA    
+
+
+
+Imports list:
+-------------
+NMI_Handler (test_display.o):
+    header.o                  src/header.asm:8
+Reset_Handler (test_display.o):
+    header.o                  src/header.asm:8
+

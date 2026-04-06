@@ -1,0 +1,1 @@
+C:\Projects\Home\ai-mario\AIMario.CPlusPlus\build\_deps\raylib-build\raylib\external\glfw\src\glfw.dir\Release\glfw.lib

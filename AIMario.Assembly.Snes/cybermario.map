@@ -1,0 +1,454 @@
+Modules list:
+-------------
+ram.o:
+    BSS               Offs=000000  Size=000E91  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000037  Align=00001  Fill=0000
+header.o:
+    HEADER            Offs=000000  Size=000020  Align=00001  Fill=0000
+    VECTORS           Offs=000000  Size=000020  Align=00001  Fill=0000
+init.o:
+    CODE              Offs=000000  Size=000114  Align=00001  Fill=0000
+main.o:
+    CODE              Offs=000114  Size=00012F  Align=00001  Fill=0000
+joypad.o:
+    CODE              Offs=000243  Size=00001C  Align=00001  Fill=0000
+mario.o:
+    CODE              Offs=00025F  Size=00015A  Align=00001  Fill=0000
+physics.o:
+    CODE              Offs=0003B9  Size=0001FC  Align=00001  Fill=0000
+collision.o:
+    CODE              Offs=0005B5  Size=00008B  Align=00001  Fill=0000
+camera.o:
+    CODE              Offs=000640  Size=00001A  Align=00001  Fill=0000
+level.o:
+    CODE              Offs=00065A  Size=0001F1  Align=00001  Fill=0000
+sprites.o:
+    CODE              Offs=00084B  Size=000136  Align=00001  Fill=0000
+dma.o:
+    CODE              Offs=000981  Size=00002F  Align=00001  Fill=0000
+tiles.o:
+    CODE              Offs=0009B0  Size=0001A9  Align=00001  Fill=0000
+items.o:
+    CODE              Offs=000B59  Size=0002E1  Align=00001  Fill=0000
+hud.o:
+    CODE              Offs=000E3A  Size=0002E6  Align=00001  Fill=0000
+palettes.o:
+    CODE              Offs=001120  Size=000059  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000208  Align=00001  Fill=0000
+bg_tiles.o:
+    CODE              Offs=001179  Size=000034  Align=00001  Fill=0000
+    RODATA            Offs=000208  Size=000280  Align=00001  Fill=0000
+sprite_tiles.o:
+    CODE              Offs=0011AD  Size=000038  Align=00001  Fill=0000
+    RODATA            Offs=000488  Size=000C00  Align=00001  Fill=0000
+metatiles.o:
+    RODATA            Offs=001088  Size=000038  Align=00001  Fill=0000
+level_1_1.o:
+    RODATA            Offs=0010C0  Size=000C40  Align=00001  Fill=0000
+level_blocks.o:
+    RODATA2           Offs=000000  Size=00001F  Align=00001  Fill=0000
+hud_tiles.o:
+    RODATA2           Offs=00001F  Size=000180  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+ZEROPAGE              000000  000036  000037  00001
+BSS                   000200  001090  000E91  00001
+CODE                  008000  0091E4  0011E5  00001
+HEADER                00FFC0  00FFDF  000020  00001
+VECTORS               00FFE0  00FFFF  000020  00001
+RODATA                018000  019CFF  001D00  00001
+RODATA2               028000  02819E  00019F  00001
+
+
+Exports list by name:
+---------------------
+AddCoin                   009110 RLA    AddScore                  0090FE RLA    
+Camera_Update             008640 RLA    CheckTileCollision        0085B5 RLA    
+DMA_TransferOAM           008981 RLA    HUD_FONT_SIZE             000180 REA    
+HUD_Init                  008E3A RLA    HitBlock                  0089B0 RLA    
+Items_Update              008BE8 RLA    Level_CopyToRAM           008826 RLA    
+Level_Init                00865A RLA    Main_Init                 008114 RLA    
+Mario_PowerUp             00826C RLA    Mario_Update              00825F RLA    
+MoveAndCollide            0083B9 RLA    NMI_Handler               0081FE RLA    
+ReadJoypad                008243 RLA    Reset_Handler             008000 RLA    
+SpawnItem                 008B59 RLA    Sprites_Begin             00884B RLA    
+Sprites_DrawItems         008DBC RLA    Sprites_DrawMario         008879 RLA    
+Timer_Update              0090DD RLA    Upload_BG_Tiles           009179 RLA    
+Upload_Initial_Tilemap    00865B RLA    Upload_Palette            009120 RLA    
+Upload_Sprite_Tiles       0091AD RLA    block_contents            028000 RLA    
+camera_x_hi               000018 RLZ    camera_x_lo               000017 RLZ    
+coins                     00002D RLZ    frame_counter             000019 RLZ    
+game_state                00001B RLZ    hud_dirty                 000032 RLZ    
+hud_font_data             02801F RLA    item_active               000421 RLA    
+item_dir                  00044D RLA    item_timer                000449 RLA    
+item_type                 000425 RLA    item_vx_hi                00043D RLA    
+item_vx_lo                000439 RLA    item_vy_hi                000445 RLA    
+item_vy_lo                000441 RLA    item_x_hi                 00042D RLA    
+item_x_lo                 000429 RLA    item_y_hi                 000435 RLA    
+item_y_lo                 000431 RLA    joy1_held                 000004 RLZ    
+joy1_press                000002 RLZ    joy1_raw                  000000 RLZ    
+level_data                0190C0 RLA    level_ram                 000451 RLA    
+lives                     00002E RLZ    mario_anim                000011 RLZ    
+mario_anim_frame          000014 RLZ    mario_anim_timer          000015 RLZ    
+mario_dir                 000012 RLZ    mario_jump_held           000016 RLZ    
+mario_on_ground           000013 RLZ    mario_state               000010 RLZ    
+mario_vx_hi               00000D RLZ    mario_vx_lo               00000C RLZ    
+mario_vy_hi               00000F RLZ    mario_vy_lo               00000E RLZ    
+mario_x_hi                000008 RLZ    mario_x_lo                000007 RLZ    
+mario_x_sub               000006 RLZ    mario_y_hi                00000B RLZ    
+mario_y_lo                00000A RLZ    mario_y_sub               000009 RLZ    
+metatile_map              019088 RLA    nmi_ready                 00001A RLZ    
+oam_buf                   000200 RLA    oam_buf_hi                000400 RLA    
+oam_index                 000420 RLA    ptr0                      000025 RLZ    
+ptr0h                     000026 RLZ    row_offsets               0087E9 RLA    
+score                     00002A RLZ    scroll_col_drawn          000029 RLZ    
+temp0                     00001C RLZ    temp1                     00001D RLZ    
+temp2                     00001E RLZ    temp3                     00001F RLZ    
+temp4                     000020 RLZ    temp5                     000022 RLZ    
+temp6                     000023 RLZ    temp7                     000024 RLZ    
+tile_upd_col              000033 RLZ    tile_upd_pending          000036 RLZ    
+tile_upd_row              000034 RLZ    tile_upd_type             000035 RLZ    
+timer                     00002F RLZ    timer_tick                000031 RLZ    
+
+
+
+Exports list by value:
+----------------------
+joy1_raw                  000000 RLZ    joy1_press                000002 RLZ    
+joy1_held                 000004 RLZ    mario_x_sub               000006 RLZ    
+mario_x_lo                000007 RLZ    mario_x_hi                000008 RLZ    
+mario_y_sub               000009 RLZ    mario_y_lo                00000A RLZ    
+mario_y_hi                00000B RLZ    mario_vx_lo               00000C RLZ    
+mario_vx_hi               00000D RLZ    mario_vy_lo               00000E RLZ    
+mario_vy_hi               00000F RLZ    mario_state               000010 RLZ    
+mario_anim                000011 RLZ    mario_dir                 000012 RLZ    
+mario_on_ground           000013 RLZ    mario_anim_frame          000014 RLZ    
+mario_anim_timer          000015 RLZ    mario_jump_held           000016 RLZ    
+camera_x_lo               000017 RLZ    camera_x_hi               000018 RLZ    
+frame_counter             000019 RLZ    nmi_ready                 00001A RLZ    
+game_state                00001B RLZ    temp0                     00001C RLZ    
+temp1                     00001D RLZ    temp2                     00001E RLZ    
+temp3                     00001F RLZ    temp4                     000020 RLZ    
+temp5                     000022 RLZ    temp6                     000023 RLZ    
+temp7                     000024 RLZ    ptr0                      000025 RLZ    
+ptr0h                     000026 RLZ    scroll_col_drawn          000029 RLZ    
+score                     00002A RLZ    coins                     00002D RLZ    
+lives                     00002E RLZ    timer                     00002F RLZ    
+timer_tick                000031 RLZ    hud_dirty                 000032 RLZ    
+tile_upd_col              000033 RLZ    tile_upd_row              000034 RLZ    
+tile_upd_type             000035 RLZ    tile_upd_pending          000036 RLZ    
+HUD_FONT_SIZE             000180 REA    oam_buf                   000200 RLA    
+oam_buf_hi                000400 RLA    oam_index                 000420 RLA    
+item_active               000421 RLA    item_type                 000425 RLA    
+item_x_lo                 000429 RLA    item_x_hi                 00042D RLA    
+item_y_lo                 000431 RLA    item_y_hi                 000435 RLA    
+item_vx_lo                000439 RLA    item_vx_hi                00043D RLA    
+item_vy_lo                000441 RLA    item_vy_hi                000445 RLA    
+item_timer                000449 RLA    item_dir                  00044D RLA    
+level_ram                 000451 RLA    Reset_Handler             008000 RLA    
+Main_Init                 008114 RLA    NMI_Handler               0081FE RLA    
+ReadJoypad                008243 RLA    Mario_Update              00825F RLA    
+Mario_PowerUp             00826C RLA    MoveAndCollide            0083B9 RLA    
+CheckTileCollision        0085B5 RLA    Camera_Update             008640 RLA    
+Level_Init                00865A RLA    Upload_Initial_Tilemap    00865B RLA    
+row_offsets               0087E9 RLA    Level_CopyToRAM           008826 RLA    
+Sprites_Begin             00884B RLA    Sprites_DrawMario         008879 RLA    
+DMA_TransferOAM           008981 RLA    HitBlock                  0089B0 RLA    
+SpawnItem                 008B59 RLA    Items_Update              008BE8 RLA    
+Sprites_DrawItems         008DBC RLA    HUD_Init                  008E3A RLA    
+Timer_Update              0090DD RLA    AddScore                  0090FE RLA    
+AddCoin                   009110 RLA    Upload_Palette            009120 RLA    
+Upload_BG_Tiles           009179 RLA    Upload_Sprite_Tiles       0091AD RLA    
+metatile_map              019088 RLA    level_data                0190C0 RLA    
+block_contents            028000 RLA    hud_font_data             02801F RLA    
+
+
+
+Imports list:
+-------------
+AddCoin (hud.o):
+    tiles.o                   src/tiles.asm:20
+AddScore (hud.o):
+    items.o                   src/items.asm:20
+Camera_Update (camera.o):
+    main.o                    src/main.asm:23
+CheckTileCollision (collision.o):
+    physics.o                 src/physics.asm:23
+DMA_TransferOAM (dma.o):
+    main.o                    src/main.asm:26
+HUD_FONT_SIZE (hud_tiles.o):
+    hud.o                     src/hud.asm:13
+HUD_Init (hud.o):
+    main.o                    src/main.asm:32
+HitBlock (tiles.o):
+    physics.o                 src/physics.asm:24
+Items_Update (items.o):
+    main.o                    src/main.asm:31
+Level_CopyToRAM (level.o):
+    main.o                    src/main.asm:28
+Level_Init (level.o):
+    main.o                    src/main.asm:28
+Main_Init (main.o):
+    init.o                    src/init.asm:9
+Mario_PowerUp (mario.o):
+    items.o                   src/items.asm:21
+Mario_Update (mario.o):
+    main.o                    src/main.asm:22
+MoveAndCollide (physics.o):
+    mario.o                   src/mario.asm:18
+NMI_Handler (main.o):
+    header.o                  src/header.asm:8
+ReadJoypad (joypad.o):
+    main.o                    src/main.asm:21
+Reset_Handler (init.o):
+    header.o                  src/header.asm:8
+SpawnItem (items.o):
+    tiles.o                   src/tiles.asm:19
+Sprites_Begin (sprites.o):
+    main.o                    src/main.asm:24
+Sprites_DrawItems (items.o):
+    main.o                    src/main.asm:25
+Sprites_DrawMario (sprites.o):
+    main.o                    src/main.asm:24
+Timer_Update (hud.o):
+    main.o                    src/main.asm:32
+Upload_BG_Tiles (bg_tiles.o):
+    main.o                    src/main.asm:29
+Upload_Initial_Tilemap (level.o):
+    main.o                    src/main.asm:30
+Upload_Palette (palettes.o):
+    main.o                    src/main.asm:29
+Upload_Sprite_Tiles (sprite_tiles.o):
+    main.o                    src/main.asm:29
+block_contents (level_blocks.o):
+    tiles.o                   src/tiles.asm:18
+camera_x_hi (ram.o):
+    main.o                    src/main.asm:15
+camera_x_lo (ram.o):
+    items.o                   src/items.asm:12
+    sprites.o                 src/sprites.asm:12
+    level.o                   src/level.asm:9
+    camera.o                  src/camera.asm:12
+    main.o                    src/main.asm:15
+coins (ram.o):
+    hud.o                     src/hud.asm:9
+    main.o                    src/main.asm:18
+frame_counter (ram.o):
+    main.o                    src/main.asm:16
+game_state (ram.o):
+    main.o                    src/main.asm:16
+hud_dirty (ram.o):
+    hud.o                     src/hud.asm:9
+    tiles.o                   src/tiles.asm:119
+    main.o                    src/main.asm:18
+hud_font_data (hud_tiles.o):
+    hud.o                     src/hud.asm:13
+item_active (ram.o):
+    items.o                   src/items.asm:15
+item_dir (ram.o):
+    items.o                   src/items.asm:17
+item_timer (ram.o):
+    items.o                   src/items.asm:17
+item_type (ram.o):
+    items.o                   src/items.asm:15
+item_vx_hi (ram.o):
+    items.o                   src/items.asm:16
+item_vx_lo (ram.o):
+    items.o                   src/items.asm:16
+item_vy_hi (ram.o):
+    items.o                   src/items.asm:17
+item_vy_lo (ram.o):
+    items.o                   src/items.asm:17
+item_x_hi (ram.o):
+    items.o                   src/items.asm:15
+item_x_lo (ram.o):
+    items.o                   src/items.asm:15
+item_y_hi (ram.o):
+    items.o                   src/items.asm:16
+item_y_lo (ram.o):
+    items.o                   src/items.asm:16
+joy1_held (ram.o):
+    joypad.o                  src/joypad.asm:8
+joy1_press (ram.o):
+    mario.o                   src/mario.asm:9
+    joypad.o                  src/joypad.asm:8
+joy1_raw (ram.o):
+    mario.o                   src/mario.asm:9
+    joypad.o                  src/joypad.asm:8
+level_data (level_1_1.o):
+    level.o                   src/level.asm:14
+level_ram (ram.o):
+    items.o                   src/items.asm:19
+    tiles.o                   src/tiles.asm:17
+    level.o                   src/level.asm:14
+    collision.o               src/collision.asm:17
+lives (ram.o):
+    main.o                    src/main.asm:18
+mario_anim (ram.o):
+    sprites.o                 src/sprites.asm:11
+    mario.o                   src/mario.asm:14
+    main.o                    src/main.asm:13
+mario_anim_frame (ram.o):
+    sprites.o                 src/sprites.asm:11
+    mario.o                   src/mario.asm:15
+    main.o                    src/main.asm:14
+mario_anim_timer (ram.o):
+    mario.o                   src/mario.asm:15
+    main.o                    src/main.asm:14
+mario_dir (ram.o):
+    sprites.o                 src/sprites.asm:11
+    mario.o                   src/mario.asm:14
+    main.o                    src/main.asm:13
+mario_jump_held (ram.o):
+    physics.o                 src/physics.asm:20
+    mario.o                   src/mario.asm:15
+    main.o                    src/main.asm:14
+mario_on_ground (ram.o):
+    physics.o                 src/physics.asm:20
+    mario.o                   src/mario.asm:14
+    main.o                    src/main.asm:13
+mario_state (ram.o):
+    tiles.o                   src/tiles.asm:10
+    sprites.o                 src/sprites.asm:11
+    physics.o                 src/physics.asm:20
+    mario.o                   src/mario.asm:14
+    main.o                    src/main.asm:13
+mario_vx_hi (ram.o):
+    physics.o                 src/physics.asm:18
+    main.o                    src/main.asm:12
+mario_vx_lo (ram.o):
+    physics.o                 src/physics.asm:18
+    mario.o                   src/mario.asm:12
+    main.o                    src/main.asm:12
+mario_vy_hi (ram.o):
+    physics.o                 src/physics.asm:19
+    main.o                    src/main.asm:12
+mario_vy_lo (ram.o):
+    physics.o                 src/physics.asm:19
+    mario.o                   src/mario.asm:13
+    main.o                    src/main.asm:12
+mario_x_hi (ram.o):
+    physics.o                 src/physics.asm:16
+    main.o                    src/main.asm:10
+mario_x_lo (ram.o):
+    items.o                   src/items.asm:9
+    sprites.o                 src/sprites.asm:9
+    camera.o                  src/camera.asm:11
+    physics.o                 src/physics.asm:16
+    main.o                    src/main.asm:10
+mario_x_sub (ram.o):
+    physics.o                 src/physics.asm:16
+    main.o                    src/main.asm:10
+mario_y_hi (ram.o):
+    physics.o                 src/physics.asm:17
+    mario.o                   src/mario.asm:11
+    main.o                    src/main.asm:11
+mario_y_lo (ram.o):
+    items.o                   src/items.asm:9
+    sprites.o                 src/sprites.asm:10
+    physics.o                 src/physics.asm:17
+    mario.o                   src/mario.asm:11
+    main.o                    src/main.asm:11
+mario_y_sub (ram.o):
+    physics.o                 src/physics.asm:17
+    main.o                    src/main.asm:11
+metatile_map (metatiles.o):
+    tiles.o                   src/tiles.asm:17
+    level.o                   src/level.asm:14
+nmi_ready (ram.o):
+    main.o                    src/main.asm:16
+oam_buf (ram.o):
+    items.o                   src/items.asm:18
+    dma.o                     src/dma.asm:8
+    sprites.o                 src/sprites.asm:15
+    main.o                    src/main.asm:27
+oam_buf_hi (ram.o):
+    items.o                   src/items.asm:18
+    sprites.o                 src/sprites.asm:15
+    main.o                    src/main.asm:27
+oam_index (ram.o):
+    items.o                   src/items.asm:18
+    sprites.o                 src/sprites.asm:15
+ptr0 (ram.o):
+    level.o                   src/level.asm:12
+    collision.o               src/collision.asm:15
+ptr0h (ram.o):
+    collision.o               src/collision.asm:15
+row_offsets (level.o):
+    items.o                   src/items.asm:19
+    tiles.o                   src/tiles.asm:17
+    collision.o               src/collision.asm:17
+score (ram.o):
+    hud.o                     src/hud.asm:9
+    tiles.o                   src/tiles.asm:15
+    main.o                    src/main.asm:18
+scroll_col_drawn (ram.o):
+    level.o                   src/level.asm:10
+    main.o                    src/main.asm:17
+temp0 (ram.o):
+    hud.o                     src/hud.asm:11
+    items.o                   src/items.asm:11
+    sprites.o                 src/sprites.asm:13
+    level.o                   src/level.asm:11
+    collision.o               src/collision.asm:14
+    physics.o                 src/physics.asm:21
+    mario.o                   src/mario.asm:16
+temp1 (ram.o):
+    hud.o                     src/hud.asm:11
+    items.o                   src/items.asm:11
+    tiles.o                   src/tiles.asm:11
+    sprites.o                 src/sprites.asm:13
+    collision.o               src/collision.asm:14
+    physics.o                 src/physics.asm:21
+temp2 (ram.o):
+    hud.o                     src/hud.asm:11
+    items.o                   src/items.asm:11
+    sprites.o                 src/sprites.asm:13
+    level.o                   src/level.asm:11
+    collision.o               src/collision.asm:14
+    physics.o                 src/physics.asm:21
+    mario.o                   src/mario.asm:16
+temp3 (ram.o):
+    hud.o                     src/hud.asm:11
+    items.o                   src/items.asm:11
+    tiles.o                   src/tiles.asm:11
+    level.o                   src/level.asm:11
+    collision.o               src/collision.asm:14
+    physics.o                 src/physics.asm:21
+temp4 (ram.o):
+    items.o                   src/items.asm:11
+    tiles.o                   src/tiles.asm:11
+    level.o                   src/level.asm:11
+    collision.o               src/collision.asm:14
+    physics.o                 src/physics.asm:21
+temp5 (ram.o):
+    tiles.o                   src/tiles.asm:11
+    level.o                   src/level.asm:11
+temp6 (ram.o):
+    tiles.o                   src/tiles.asm:11
+    level.o                   src/level.asm:11
+    physics.o                 src/physics.asm:21
+temp7 (ram.o):
+    items.o                   src/items.asm:11
+tile_upd_col (ram.o):
+    items.o                   src/items.asm:13
+    tiles.o                   src/tiles.asm:13
+tile_upd_pending (ram.o):
+    tiles.o                   src/tiles.asm:13
+    main.o                    src/main.asm:19
+tile_upd_row (ram.o):
+    items.o                   src/items.asm:13
+    tiles.o                   src/tiles.asm:13
+tile_upd_type (ram.o):
+    tiles.o                   src/tiles.asm:13
+timer (ram.o):
+    hud.o                     src/hud.asm:9
+    main.o                    src/main.asm:18
+timer_tick (ram.o):
+    hud.o                     src/hud.asm:9
+    main.o                    src/main.asm:18
+

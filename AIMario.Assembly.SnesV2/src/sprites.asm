@@ -121,19 +121,24 @@
     rts
 
 @walk:
-    ; Look up walk frame (0, 1, 2) → tile base
+    ; Ping-pong cycle: frame 0→Walk1, 1→Walk2, 2→Walk3, 3→Walk2
     lda mario_anim_frame
     beq @walk0
     cmp #$01
     beq @walk1
-    ; frame 2
-    lda #SPR_MARIO_WALK3
+    cmp #$02
+    beq @walk2
+    ; frame 3 = same as frame 1 (passing position)
+    lda #SPR_MARIO_WALK2
     rts
 @walk0:
     lda #SPR_MARIO_WALK1
     rts
 @walk1:
     lda #SPR_MARIO_WALK2
+    rts
+@walk2:
+    lda #SPR_MARIO_WALK3
     rts
 
 @jump:

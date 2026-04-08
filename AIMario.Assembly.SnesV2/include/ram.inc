@@ -12,8 +12,9 @@
 .globalzp mario_vx_lo, mario_vx_hi
 .globalzp mario_vy_lo, mario_vy_hi
 .globalzp mario_dir, mario_on_ground
-.globalzp mario_anim, mario_anim_frame, mario_anim_timer
+.globalzp mario_anim, mario_anim_frame, mario_anim_timer, mario_jump_held
 .globalzp camera_x_lo, camera_x_hi
+.globalzp score, coins, lives, timer, timer_tick, hud_dirty
 .globalzp frame_counter, nmi_ready
 .globalzp temp0, temp1, temp2, temp3, temp4, temp5, temp6, temp7
 .globalzp ptr0, ptr0h, ptr1, ptr1h
@@ -44,12 +45,21 @@ mario_vy_hi:    .res 1
 mario_dir:      .res 1          ; facing direction
 mario_on_ground:.res 1          ; nonzero = on ground
 mario_anim:     .res 1          ; current animation (MANIM_*)
-mario_anim_frame:.res 1         ; walk frame index (0-2)
+mario_anim_frame:.res 1         ; walk frame index (0-3)
 mario_anim_timer:.res 1         ; walk frame countdown
+mario_jump_held:.res 1          ; nonzero = jump button held (variable height)
 
 ; Camera (16-bit pixel X position)
 camera_x_lo:    .res 1
 camera_x_hi:    .res 1
+
+; HUD state
+score:          .res 3          ; 24-bit BCD (3 bytes = 6 digits)
+coins:          .res 1          ; binary 0-99
+lives:          .res 1          ; binary 0-9
+timer:          .res 2          ; 16-bit binary countdown (400→0)
+timer_tick:     .res 1          ; sub-frame counter for timer
+hud_dirty:      .res 1          ; nonzero = HUD needs VRAM update
 
 ; System
 frame_counter:  .res 1

@@ -11,8 +11,9 @@
 .importzp mario_y_sub, mario_y_lo, mario_y_hi
 .importzp mario_vx_lo, mario_vx_hi, mario_vy_lo, mario_vy_hi
 .importzp mario_dir, mario_on_ground
-.importzp mario_anim, mario_anim_frame, mario_anim_timer
+.importzp mario_anim, mario_anim_frame, mario_anim_timer, mario_jump_held
 .importzp camera_x_lo, camera_x_hi
+.importzp score, coins, lives, timer, timer_tick, hud_dirty
 .importzp frame_counter, nmi_ready
 .importzp scroll_col_drawn
 .importzp temp0, temp1, temp2, temp3, temp4, temp5, temp6, temp7
@@ -27,6 +28,7 @@
 .import Level_Init, Level_StreamColumn, Level_CopyToRAM
 .import Upload_Palette, Upload_BG_Tiles, Upload_Sprite_Tiles
 .import Upload_Initial_Tilemap
+.import HUD_Init, HUD_Upload, Timer_Update
 
 .export Main_Init, NMI_Handler
 
@@ -41,25 +43,33 @@
     jsr Upload_Sprite_Tiles
     jsr Upload_Palette
 
-    ; Mode 1: BG1=4bpp, BG2=4bpp, BG3=2bpp
-    lda #$01
+    ; Mode 1: BG1=4bpp, BG2=4bpp, BG3=2bpp + BG3 priority bit
+    lda #$09
     sta BGMODE
 
     ; BG1 tilemap at VRAM $4000, 64 tiles wide (bit 0 set)
     lda #$41
     sta BG1SC
 
+    ; BG3 tilemap at VRAM $2800 (word addr), 32 tiles wide
+    lda #$28
+    sta BG3SC
+
     ; BG1 chr at VRAM $0000
     lda #$00
     sta BG12NBA
+
+    ; BG3 chr at VRAM $2000 (word addr) → $2000/$1000 = $02
+    lda #$02
+    sta BG34NBA
 
     ; Sprite chr at VRAM $6000, 8x8/16x16 size
     lda #$03
     sta OBSEL
 
-    ; Enable BG1 + sprites on main screen
-    ; BG1=$01, OBJ=$10 → $11
-    lda #$11
+    ; Enable BG1 + BG3 + sprites on main screen
+    ; BG1=$01, BG3=$04, OBJ=$10 → $15
+    lda #$15
     sta TM
 
     ; --- Initialize Mario ---
@@ -100,6 +110,25 @@
 
     ; Upload initial visible columns to tilemap
     jsr Upload_Initial_Tilemap
+
+    ; Initialize HUD (font tiles + static text + initial values)
+    jsr HUD_Init
+
+    ; Initialize game state
+    stz score
+    stz score+1
+    stz score+2
+    stz coins
+    lda #3
+    sta lives
+    lda #<TIMER_INIT
+    sta timer
+    lda #>TIMER_INIT
+    sta timer+1
+    stz timer_tick
+    lda #$01
+    sta hud_dirty
+    stz mario_jump_held
 
     ; Track which column we've drawn (initial 17 columns: 0-16)
     lda #16
@@ -149,6 +178,7 @@ MainLoop:
     jsr Mario_Update
     jsr Camera_Update
     jsr Level_StreamColumn
+    jsr Timer_Update
 
     ; --- Sprite drawing ---
     jsr Sprites_Begin
@@ -208,6 +238,15 @@ MainLoop:
     sta BG1HOFS
     stz BG1VOFS
     stz BG1VOFS
+
+    ; 3. BG3 stays fixed (HUD doesn't scroll)
+    stz BG3HOFS
+    stz BG3HOFS
+    stz BG3VOFS
+    stz BG3VOFS
+
+    ; 4. Update HUD tiles in VRAM (if dirty)
+    jsr HUD_Upload
 
     ; Signal main loop
     stz nmi_ready

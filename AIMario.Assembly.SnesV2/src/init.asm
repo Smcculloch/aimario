@@ -108,7 +108,7 @@
     ; --- Clear VRAM (64 KB) ---
     stz VMADDL
     stz VMADDH
-    lda #$18                    ; A→B, fixed source, 2-register ($2118/$2119)
+    lda #$09                    ; A→B, fixed source, 2-register ($2118/$2119)
     sta DMAP0
     lda #$18                    ; B-bus: VMDATAL ($2118)
     sta BBAD0

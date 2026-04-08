@@ -10,7 +10,7 @@
 .importzp mario_y_sub, mario_y_lo, mario_y_hi
 .importzp mario_vx_lo, mario_vx_hi
 .importzp mario_vy_lo, mario_vy_hi
-.importzp mario_on_ground
+.importzp mario_on_ground, mario_jump_held
 .importzp temp0, temp1, temp2, temp3, temp4, temp5, temp6
 
 .import CheckTileCollision
@@ -272,6 +272,7 @@
     stz mario_y_sub
     stz mario_vy_lo
     stz mario_vy_hi
+    stz mario_jump_held
 
 @y_done:
     ; Fall death check

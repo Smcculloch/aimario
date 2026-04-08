@@ -12,7 +12,7 @@
 .importzp mario_vx_lo, mario_vx_hi
 .importzp mario_vy_lo, mario_vy_hi
 .importzp mario_dir, mario_on_ground
-.importzp mario_anim, mario_anim_frame, mario_anim_timer
+.importzp mario_anim, mario_anim_frame, mario_anim_timer, mario_jump_held
 .importzp temp0, temp1, temp2, temp3
 
 .import MoveAndCollide
@@ -103,16 +103,58 @@
     SetA8
     lda #DIR_LEFT
     sta mario_dir
-    bra @done
+    bra @do_jump
 @face_right:
     SetA8
     lda #DIR_RIGHT
     sta mario_dir
-    bra @done
+    bra @do_jump
 @no_dir_change:
     SetA8
 
-@done:
+    ; --- Jump ---
+@do_jump:
+    SetA16
+    lda joy1_press
+    and #JOY_B
+    beq @check_jump_hold
+    SetA8
+    lda mario_on_ground
+    beq @jump_done_8
+
+    ; Start jump — velocity depends on horizontal speed
+    SetA16
+    lda mario_vx_lo
+    bpl @chk_abs
+    eor #$FFFF
+    inc a
+@chk_abs:
+    cmp #WALK_MAX_SPEED
+    bcc @walk_jump
+    lda #JUMP_VEL_RUN
+    bra @set_jump
+@walk_jump:
+    lda #JUMP_VEL_WALK
+@set_jump:
+    sta mario_vy_lo
+    SetA8
+    stz mario_on_ground
+    lda #$01
+    sta mario_jump_held
+    bra @jump_done_8
+
+@check_jump_hold:
+    SetA16
+    lda joy1_raw
+    and #JOY_B
+    bne @jump_done
+    SetA8
+    stz mario_jump_held
+    bra @jump_done_8
+
+@jump_done:
+    SetA8
+@jump_done_8:
     rts
 .endproc
 
@@ -126,13 +168,26 @@
     and #$00FF
     bne @no_gravity
 
-    ; Apply full gravity
+    lda mario_jump_held
+    and #$00FF
+    beq @full_gravity
+
+    ; Reduced gravity while holding jump and moving up
+    lda mario_vy_lo
+    bpl @full_gravity
+    clc
+    adc #JUMP_HOLD_GRAV
+    sta mario_vy_lo
+    bra @clamp_vy
+
+@full_gravity:
     lda mario_vy_lo
     clc
     adc #GRAVITY
     sta mario_vy_lo
 
-    ; Clamp to max fall speed
+@clamp_vy:
+    lda mario_vy_lo
     bmi @no_gravity             ; negative = moving up, don't clamp
     cmp #MAX_FALL_SPEED
     bcc @no_gravity
@@ -174,7 +229,7 @@
     sta mario_anim_timer
     lda mario_anim_frame
     inc a
-    cmp #$03                    ; 3 frames: 0, 1, 2
+    cmp #$04                    ; 4 frames: 0, 1, 2, 3 (ping-pong)
     bcc @set_frame
     lda #$00                    ; wrap back to 0
 @set_frame:

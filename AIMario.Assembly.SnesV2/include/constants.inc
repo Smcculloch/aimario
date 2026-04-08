@@ -10,6 +10,10 @@ WALK_ACCEL      = $0098         ; ~0.59 px/frame²
 WALK_MAX_SPEED  = $0200         ; 2.0 px/frame
 FRICTION        = $0098         ; ~0.59 px/frame²
 
+JUMP_VEL_WALK   = $FB40         ; -4.75 (negative = upward)
+JUMP_VEL_RUN    = $FA80         ; -5.50
+JUMP_HOLD_GRAV  = $0030         ; reduced gravity while holding jump (floatier hold)
+
 ; --- Screen ---
 SCREEN_WIDTH    = 256
 SCREEN_HEIGHT   = 224
@@ -51,6 +55,13 @@ WALK_ANIM_SPEED = 8             ; frames per walk animation frame
 ; --- Direction ---
 DIR_RIGHT       = 0
 DIR_LEFT        = 1
+
+; --- HUD ---
+SCORE_COIN      = $02           ; 200 points (BCD hundreds digit)
+TIMER_TICK_MAX  = 24            ; frames per timer tick (~0.4s at 60fps)
+TIMER_INIT      = 400           ; starting timer value
+HUD_FONT_VRAM   = $2000         ; BG3 character base in VRAM (word addr)
+HUD_MAP_VRAM    = $2800         ; BG3 tilemap in VRAM (word addr)
 
 ; --- Joypad bit masks (SNES standard) ---
 JOY_B           = $8000

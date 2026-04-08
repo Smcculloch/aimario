@@ -36,6 +36,8 @@ MARIO_START_Y   = 176           ; Starting Y position
 TILE_EMPTY      = $00
 TILE_GROUND     = $01
 TILE_BRICK      = $02
+TILE_COIN_BLOCK = $03
+TILE_USED_BLOCK = $04
 
 ; --- Sprite tile bases (16x16: base N uses N, N+1, N+16, N+17) ---
 SPR_MARIO_STAND = $00

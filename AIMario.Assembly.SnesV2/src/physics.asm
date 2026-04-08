@@ -14,6 +14,7 @@
 .importzp temp0, temp1, temp2, temp3, temp4, temp5, temp6
 
 .import CheckTileCollision
+.import HitBlock
 
 .export MoveAndCollide
 
@@ -273,6 +274,9 @@
     stz mario_vy_lo
     stz mario_vy_hi
     stz mario_jump_held
+
+    ; Hit the block (temp1=col, temp3=row from CheckTileCollision)
+    jsr HitBlock
 
 @y_done:
     ; Fall death check

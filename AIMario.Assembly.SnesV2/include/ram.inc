@@ -19,6 +19,7 @@
 .globalzp temp0, temp1, temp2, temp3, temp4, temp5, temp6, temp7
 .globalzp ptr0, ptr0h, ptr1, ptr1h
 .globalzp scroll_col_drawn
+.globalzp tile_upd_col, tile_upd_row, tile_upd_type, tile_upd_pending
 
 .segment "ZEROPAGE"
 
@@ -83,6 +84,12 @@ ptr1h:          .res 1
 
 ; Scroll column tracking
 scroll_col_drawn: .res 1
+
+; Tile update queue (for VBlank VRAM writes)
+tile_upd_col:     .res 1        ; metatile column to update
+tile_upd_row:     .res 1        ; metatile row to update
+tile_upd_type:    .res 1        ; new tile type
+tile_upd_pending: .res 1        ; nonzero = pending VRAM update
 
 ; --- Low RAM (not zero-page) ---
 .global oam_buf, oam_buf_hi, oam_index

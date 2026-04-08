@@ -30,8 +30,19 @@ bg_palette_actual:
     .word $7FFF                 ; 14: white
     .word $0000                 ; 15: black
 
-; Palettes 1-7: copy of palette 0
-.repeat 7
+; Palette 1: Gold / coin block
+    .word $7108                 ; 0: backdrop = sky blue
+    .word $010C                 ; 1: dark gold/brown (border)
+    .word $0A9C                 ; 2: rich gold (body)
+    .word $239F                 ; 3: bright yellow (highlight/? mark)
+    .word $00A8                 ; 4: darker brown (detail)
+    .word $7FFF                 ; 5: white (shine)
+    .word $7FE0                 ; 6: neon cyan (unused, same as pal 0)
+    .word $601F                 ; 7: neon magenta (unused)
+    .word $4210, $6318, $294A, $1108, $01C4, $02A8, $7FFF, $0000
+
+; Palettes 2-7: copy of palette 0
+.repeat 6
     .word $7108, $7108, $0C86, $14EA, $210C, $2D4E, $7FE0, $601F
     .word $4210, $6318, $294A, $1108, $01C4, $02A8, $7FFF, $0000
 .endrepeat

@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 **/local.settings.json
 .claude
+mempalace.yaml
+entities.json

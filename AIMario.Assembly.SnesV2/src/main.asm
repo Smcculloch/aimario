@@ -29,6 +29,7 @@
 .import Upload_Palette, Upload_BG_Tiles, Upload_Sprite_Tiles
 .import Upload_Initial_Tilemap
 .import HUD_Init, HUD_Upload, Timer_Update
+.import TileUpdate_Apply
 
 .export Main_Init, NMI_Handler
 
@@ -177,7 +178,6 @@ MainLoop:
     jsr ReadJoypad
     jsr Mario_Update
     jsr Camera_Update
-    jsr Level_StreamColumn
     jsr Timer_Update
 
     ; --- Sprite drawing ---
@@ -245,7 +245,13 @@ MainLoop:
     stz BG3VOFS
     stz BG3VOFS
 
-    ; 4. Update HUD tiles in VRAM (if dirty)
+    ; 4. Stream new level column to BG1 VRAM (must be in VBlank)
+    jsr Level_StreamColumn
+
+    ; 5. Apply pending tile updates to BG1 VRAM
+    jsr TileUpdate_Apply
+
+    ; 5. Update HUD tiles in VRAM (if dirty)
     jsr HUD_Upload
 
     ; Signal main loop

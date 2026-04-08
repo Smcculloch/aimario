@@ -11,7 +11,7 @@
 .importzp temp0, temp1, temp2, temp3, temp4, temp5, temp6, temp7
 .importzp ptr0, ptr0h
 
-.import level_data, metatile_map, level_ram
+.import level_data, metatile_map, metatile_palette, level_ram
 
 .export Level_Init, Level_StreamColumn, Upload_Initial_Tilemap, row_offsets
 .export Level_CopyToRAM
@@ -42,27 +42,57 @@
     cpx #$0400
     bne @sky0
 
-    ; Ground rows 24-25: tile $01 (ground TL/TR)
+    ; Row 24: alternating TL($01), TR($02) — grid row
     lda #$4000 + (24 * 32)
     sta VMADDL
     ldx #$0000
-@gnd0_24:
+@gnd0_r24:
     lda #$0001
     sta VMDATAL
+    lda #$0002
+    sta VMDATAL
     inx
-    cpx #64
-    bne @gnd0_24
+    cpx #16
+    bne @gnd0_r24
 
-    ; Ground rows 26-27: tile $03 (ground BL/BR)
+    ; Row 25: alternating BL($03), BR($04) — solid row
+    lda #$4000 + (25 * 32)
+    sta VMADDL
+    ldx #$0000
+@gnd0_r25:
+    lda #$0003
+    sta VMDATAL
+    lda #$0004
+    sta VMDATAL
+    inx
+    cpx #16
+    bne @gnd0_r25
+
+    ; Row 26: alternating TL($01), TR($02) — grid row
     lda #$4000 + (26 * 32)
     sta VMADDL
     ldx #$0000
-@gnd0_26:
-    lda #$0003
+@gnd0_r26:
+    lda #$0001
+    sta VMDATAL
+    lda #$0002
     sta VMDATAL
     inx
-    cpx #64
-    bne @gnd0_26
+    cpx #16
+    bne @gnd0_r26
+
+    ; Row 27: alternating BL($03), BR($04) — solid row
+    lda #$4000 + (27 * 32)
+    sta VMADDL
+    ldx #$0000
+@gnd0_r27:
+    lda #$0003
+    sta VMDATAL
+    lda #$0004
+    sta VMDATAL
+    inx
+    cpx #16
+    bne @gnd0_r27
 
     ; --- Nametable 1 ($4400): same pattern ---
     lda #$4400
@@ -75,25 +105,57 @@
     cpx #$0400
     bne @sky1
 
+    ; Row 24
     lda #$4400 + (24 * 32)
     sta VMADDL
     ldx #$0000
-@gnd1_24:
+@gnd1_r24:
     lda #$0001
     sta VMDATAL
+    lda #$0002
+    sta VMDATAL
     inx
-    cpx #64
-    bne @gnd1_24
+    cpx #16
+    bne @gnd1_r24
 
+    ; Row 25
+    lda #$4400 + (25 * 32)
+    sta VMADDL
+    ldx #$0000
+@gnd1_r25:
+    lda #$0003
+    sta VMDATAL
+    lda #$0004
+    sta VMDATAL
+    inx
+    cpx #16
+    bne @gnd1_r25
+
+    ; Row 26
     lda #$4400 + (26 * 32)
     sta VMADDL
     ldx #$0000
-@gnd1_26:
-    lda #$0003
+@gnd1_r26:
+    lda #$0001
+    sta VMDATAL
+    lda #$0002
     sta VMDATAL
     inx
-    cpx #64
-    bne @gnd1_26
+    cpx #16
+    bne @gnd1_r26
+
+    ; Row 27
+    lda #$4400 + (27 * 32)
+    sta VMADDL
+    ldx #$0000
+@gnd1_r27:
+    lda #$0003
+    sta VMDATAL
+    lda #$0004
+    sta VMDATAL
+    inx
+    cpx #16
+    bne @gnd1_r27
 
     SetAXY_8_16
     rts
@@ -172,18 +234,27 @@
     stz temp5                   ; row counter
 @left_col_loop:
     jsr GetMetatile
-    jsr GetMetatileTiles
+    jsr GetMetatileTiles        ; A = type*4, B = 0, temp6 = type*4
+
+    ; Look up palette (A = type*4, B clean from GetMetatileTiles)
+    lsr
+    lsr                         ; A = tile type
+    tax                         ; X = $00:type (B=0, so clean 16-bit)
+    lda f:metatile_palette,x
+    sta temp1                   ; palette byte for VMDATAH
 
     ; Write top-left tile
     ldx temp6
     lda f:metatile_map,x
     sta VMDATAL
-    stz VMDATAH
+    lda temp1
+    sta VMDATAH
 
     ; Write bottom-left tile (offset +2)
     lda f:metatile_map+2,x
     sta VMDATAL
-    stz VMDATAH
+    lda temp1
+    sta VMDATAH
 
     inc temp5
     lda temp5
@@ -200,16 +271,25 @@
     stz temp5
 @right_col_loop:
     jsr GetMetatile
-    jsr GetMetatileTiles
+    jsr GetMetatileTiles        ; A = type*4, B = 0, temp6 = type*4
+
+    ; Look up palette
+    lsr
+    lsr
+    tax
+    lda f:metatile_palette,x
+    sta temp1
 
     ldx temp6
     lda f:metatile_map+1,x
     sta VMDATAL
-    stz VMDATAH
+    lda temp1
+    sta VMDATAH
 
     lda f:metatile_map+3,x
     sta VMDATAL
-    stz VMDATAH
+    lda temp1
+    sta VMDATAH
 
     inc temp5
     lda temp5

@@ -6,6 +6,7 @@
 EM = $00     ; Empty (sky)
 GR = $01     ; Ground
 BK = $02     ; Brick
+CB = $03     ; Coin block
 
 .export level_data
 
@@ -72,8 +73,12 @@ level_data:
     .byte EM
 .endrepeat
 .byte BK, BK, BK               ; col 118-120
-.repeat 103
-    .byte EM
+.repeat 8
+    .byte EM                    ; cols 121-128
+.endrepeat
+.byte CB, CB                   ; cols 129-130: coin blocks
+.repeat 93
+    .byte EM                    ; cols 131-223
 .endrepeat
 
 ; ============================================================
@@ -98,36 +103,45 @@ level_data:
 .endrepeat
 
 ; ============================================================
-; Row 9 (low bricks — matching V1 question block row positions)
-; cols 16,22: bricks   col 77: brick   cols 94,96: bricks
-; cols 101-102: bricks   col 118: brick
+; Row 9 (low bricks + coin blocks)
+; Coin blocks at: 16, 23, 77, 94, 101, 109, 112
+; Bricks at: 22, 96, 102, 118
 ; ============================================================
 .repeat 16
-    .byte EM
+    .byte EM                    ; cols 0-15
 .endrepeat
-.byte BK                        ; col 16
+.byte CB                        ; col 16: coin block
 .repeat 5
-    .byte EM
+    .byte EM                    ; cols 17-21
 .endrepeat
-.byte BK                        ; col 22
-.repeat 54
-    .byte EM
+.byte BK                        ; col 22: brick
+.byte CB                        ; col 23: coin block
+.repeat 53
+    .byte EM                    ; cols 24-76
 .endrepeat
-.byte BK                        ; col 77
+.byte CB                        ; col 77: coin block
 .repeat 16
-    .byte EM
+    .byte EM                    ; cols 78-93
 .endrepeat
-.byte BK, EM, BK               ; col 94, 95(empty), 96
+.byte CB, EM, BK               ; col 94: coin, 95: empty, 96: brick
 .repeat 4
-    .byte EM
+    .byte EM                    ; cols 97-100
 .endrepeat
-.byte BK, BK                   ; col 101-102
-.repeat 15
-    .byte EM
+.byte CB, BK                   ; col 101: coin, 102: brick
+.repeat 6
+    .byte EM                    ; cols 103-108
 .endrepeat
-.byte BK                        ; col 118
+.byte CB                        ; col 109: coin block
+.repeat 2
+    .byte EM                    ; cols 110-111
+.endrepeat
+.byte CB                        ; col 112: coin block
+.repeat 5
+    .byte EM                    ; cols 113-117
+.endrepeat
+.byte BK                        ; col 118: brick
 .repeat 105
-    .byte EM
+    .byte EM                    ; cols 119-223
 .endrepeat
 
 ; ============================================================
